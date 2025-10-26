@@ -1,0 +1,26 @@
+# ~/.config/systemd/user/shelf-llm.service
+
+[Unit]
+Description=Shelf Organizer LLM Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ha/alan-file
+ExecStart=%h/ha/alan-file/.venv/bin/python %h/ha/alan-file/shelf-llm-server.py
+Restart=always
+RestartSec=5
+
+# Environment variables
+Environment="OLLAMA_HOST=localhost:11434"
+Environment="OLLAMA_KEEP_ALIVE=24h"
+Environment="OLLAMA_NUM_GPU=99"
+Environment="PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin"
+
+# Optional: Limit memory/CPU if needed
+# MemoryLimit=8G
+# CPUQuota=80%
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,22 @@
+# /config/custom_components/shelf_organizer/services.yaml
+query:
+  name: Query Inventory
+  description: Query the shelf organizer system
+  fields:
+    query:
+      name: Query
+      description: Natural language query
+      required: true
+      selector:
+        text:
+    intent:
+      name: Intent
+      description: Intent type (find_item, add_item, list_container, find_space)
+      selector:
+        select:
+          options:
+            - find_item
+            - add_item  
+            - list_container
+            - find_space
+            - general

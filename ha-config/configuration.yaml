@@ -1,0 +1,44 @@
+# /config/configuration.yaml
+
+# Add the integration
+shelf_organizer:
+  host: "192.168.0.215"  # Your AMD machine IP
+  port: 28080
+
+# Intent scripts for voice responses
+intent_script:
+  FindItem:
+    speech:
+      text: "{{ response_text }}"
+    async_action: true
+    action:
+      - service: shelf_organizer.query
+        data:
+          query: "{{ item_description }}"
+          intent: "find_item"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+        
+  AddItem:
+    speech:
+      text: "{{ response_text }}"
+    async_action: true
+    action:
+      - service: shelf_organizer.query
+        data:
+          query: "add {{ item_description }} to {{ location }}"
+          intent: "add_item"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+        
+  ListContainer:
+    speech:
+      text: "{{ response_text }}"
+    async_action: true
+    action:
+      - service: shelf_organizer.query
+        data:
+          query: "list {{ container }}"
+          intent: "list_container"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
