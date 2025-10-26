@@ -1,0 +1,61 @@
+# /config/packages/shelf_organizer.yaml
+
+# Everything related to shelf organizer in one file
+shelf_organizer:
+  host: "192.168.1.100"
+  port: 28080
+
+intent_script:
+  FindItem:
+    speech:
+      text: "Looking for that item..."
+    action:
+      - service: shelf_organizer.find_item
+        data:
+          item: "{{ item }}"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+  
+  AddItem:
+    speech:
+      text: "Adding that item..."
+    action:
+      - service: shelf_organizer.add_item
+        data:
+          item: "{{ item }}"
+          location: "{{ location }}"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+  
+  ListContainer:
+    speech:
+      text: "Checking that container..."
+    action:
+      - service: shelf_organizer.list_container
+        data:
+          container: "{{ container }}"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+  
+  FindSpace:
+    speech:
+      text: "Finding space..."
+    action:
+      - service: shelf_organizer.query
+        data:
+          query: "find space for {{ item }}"
+          intent: "find_space"
+        response_variable: result
+      - stop: "{{ result.spoken }}"
+
+# You can also add automations, scripts, etc. related to shelf organizer here
+automation shelf_organizer:
+  - alias: "Notify on inventory query"
+    trigger:
+      - platform: event
+        event_type: shelf_organizer_query_result
+    action:
+      - service: persistent_notification.create
+        data:
+          title: "Inventory Query"
+          message: "{{ trigger.event.data.response }}"
