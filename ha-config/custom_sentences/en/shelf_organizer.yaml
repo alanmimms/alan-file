@@ -5,46 +5,45 @@ intents:
   FindItem:
     data:
       - sentences:
-          - "where is [the|my|a] {item_description}"
-          - "find [the|my] {item_description}"
-          - "locate {item_description}"
-          - "do I have {item_description}"
-          - "show me where {item_description} is"
-        slots:
-          item_description:
-            wildcard: true
+          - "where is [the|my|a] <item_description>"
+          - "find [the|my] <item_description>"
+          - "locate <item_description>"
+          - "do I have <item_description>"
+          - "show me where <item_description> is"
             
   AddItem:
     data:
       - sentences:
-          - "add {item_description} to {location}"
-          - "put {item_description} in {location}"
-          - "store {item_description} at {location}"
-          - "place {item_description} in {location}"
-        slots:
-          item_description:
-            wildcard: true
-          location:
-            wildcard: true
+          - "add <item_description> to <location>"
+          - "put <item_description> in <location>"
+          - "store <item_description> at <location>"
+          - "place <item_description> in <location>"
             
   ListContainer:
     data:
       - sentences:
-          - "what's in {container}"
-          - "list {container} contents"
-          - "show me {container}"
-          - "check {container}"
-          - "inventory of {container}"
-        slots:
-          container:
-            wildcard: true
+          - "what's in <container>"
+          - "list <container> contents"
+          - "show me <container>"
+          - "check <container>"
+          - "inventory of <container>"
             
   FindSpace:
     data:
       - sentences:
-          - "find space for {item_description}"
-          - "where can I put {item_description}"
-          - "find room for {item_description}"
-        slots:
-          item_description:
-            wildcard: true
+          - "find space for <item_description>"
+          - "where can I put <item_description>"
+          - "find room for <item_description>"
+
+expansion_rules:
+  item_description: "({item_description})"
+  container: "({container})"
+  location: "({location})"
+
+lists:
+  item_description:
+    wildcard: true
+  container:
+    wildcard: true
+  location:
+    wildcard: true
